@@ -1,5 +1,5 @@
 # systemLogin
-Login System provide to creat the user using signUp or login if already exists once logged in User able to see profile with signout and file uploading system
+System login provide to creat the user using signUp or login if already exists once logged in User able to see profile with signout and file uploading system
 
 prequists :
 
@@ -10,3 +10,4 @@ prequists :
 5) change the connection string of mysql under config/db.php
 6) hit the URL on browser 
 http://localhost/login_registration/index.php
+
