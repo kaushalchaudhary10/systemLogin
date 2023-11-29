@@ -1,72 +1,50 @@
 <?php include __DIR__.'../controllers/register.php'; ?>
-
 <!doctype html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <?php include __DIR__ .'/commonHeader.php'; ?>
     <title>Signup</title>
- 
-    <!-- jQuery + Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <div class="App">
         <div class="vertical-center">
             <div class="inner-block">
-                <form action="" method="post">
+                <form action="" method="post" name='signupForm'>
                     <h3>Register</h3>
 
-                    <?php echo $success_msg; ?>
+                    <?php echo $msg; ?>
                     <?php echo $email_exist; ?>
-
-                    <?php 
-                        echo $msg;
-                    ?>
 
                     <div class="form-group">
                         <label>First name</label>
                         <input type="text" class="form-control" name="firstname" id="firstName" />
-
-                        <?php echo $fNameEmptyErr; ?>
                         <?php echo $f_NameErr; ?>
                     </div>
 
                     <div class="form-group">
                         <label>Last name</label>
                         <input type="text" class="form-control" name="lastname" id="lastName" />
-
                         <?php echo $l_NameErr; ?>
-                        <?php echo $lNameEmptyErr; ?>
                     </div>
 
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" class="form-control" name="email" id="email" />
-
                         <?php echo $_emailErr; ?>
-                        <?php echo $emailEmptyErr; ?>
                     </div>
 
                     <div class="form-group">
                         <label>Mobile</label>
                         <input type="text" class="form-control" name="mobilenumber" id="mobilenumber" />
-
                         <?php echo $_mobileErr; ?>
-                        <?php echo $mobileEmptyErr; ?>
                     </div>
 
                     <div class="form-group">
                         <label>Password</label>
                         <input type="password" class="form-control" name="password" id="password" />
-
                         <?php echo $_passwordErr; ?>
-                        <?php echo $passwordEmptyErr; ?>
                     </div>
 
                     <button type="submit" name="submit" id="submit" class="btn btn-outline-primary btn-lg btn-block">Sign up
@@ -75,6 +53,55 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            // Form Validation
+            $("form[name='signupForm']").validate({
+                // Define validation rules
+                rules: {
+                    firstname: "required",
+                    lastname: "required",
+                    email: "required",
+                    mobilenumber: "required",
+                    password: "required",
+                    firstname: {
+                        required: true,
+                        email: true
+                    },
+                    lastname: {
+                        required: true,
+                        email: true
+                    },
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    mobilenumber: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        email: true
+                    },
+                },
+                // Specify validation error messages
+                messages: {
+                    firstname: "Please enter your first name",
+                    lastname: "Please enter your last name",
+                    email: {
+                        required: "Please enter your email",
+                        minlength: "Please enter a valid email address"
+                    },
+                    mobilenumber: "Please enter your mobile number",
+                    password: "Please enter your password"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        }); 
+    </script>
 
 </body>
 

@@ -1,9 +1,8 @@
 <?php
-   
     // Database connection
     include __DIR__.'../../config/db.php';
 
-    global $wrongPwdErr, $accountNotExistErr, $emailPwdErr, $email_empty_err, $pass_empty_err;
+    global $accountNotExistErr, $emailPwdErr;
 
     if(isset($_POST['login'])) {
         $email_signin        = $_POST['email_signin'];
@@ -11,7 +10,6 @@
 
         // clean data 
         $user_email = filter_var($email_signin, FILTER_SANITIZE_EMAIL);
-        $pswd = mysqli_real_escape_string($connection, $password_signin);
 
         // Query if email exists in db
         $sql = "SELECT * From users WHERE email = '{$email_signin}' ";
@@ -24,11 +22,6 @@
         }
 
         if(!empty($email_signin) && !empty($password_signin)){
-            if(!preg_match("/^(?=.*\d)(?=.*[@#\-_$%^&+=§!\?])(?=.*[a-z])(?=.*[A-Z])[0-9A-Za-z@#\-_$%^&+=§!\?]{6,20}$/", $pswd)) {
-                $wrongPwdErr = '<div class="alert alert-danger">
-                        Password should be between 6 to 20 charcters long, contains atleast one special chacter, lowercase, uppercase and a digit.
-                    </div>';
-            }
             // Check if email exist
             if($rowCount <= 0) {
                 $accountNotExistErr = '<div class="alert alert-danger">
@@ -41,7 +34,7 @@
                     $firstname     = $row['firstname'];
                     $lastname      = $row['lastname'];
                     $email         = $row['email'];
-                    $mobilenumber   = $row['mobilenumber'];
+                    $mobilenumber  = $row['mobilenumber'];
                     $pass_word     = $row['password'];
                     $token         = $row['token'];
                     $is_active     = $row['is_active'];
@@ -67,18 +60,6 @@
                     </div>';
                 }
             }
-        } else {
-            if(empty($email_signin)){
-                $email_empty_err = "<div class='alert alert-danger email_alert'>
-                        Email not provided.
-                </div>";
-            }
-            
-            if(empty($password_signin)){
-                $pass_empty_err = "<div class='alert alert-danger email_alert'>
-                    Password not provided.
-                </div>";
-            }            
         }
     }
 ?>

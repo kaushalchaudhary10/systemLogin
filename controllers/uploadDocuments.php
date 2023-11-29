@@ -54,12 +54,6 @@
                     }
                 }
             }
-        } else {
-            // Error
-            $response = array(
-                "status" => "alert-danger",
-                "message" => "Please select a file to upload."
-            );
         }
     }else {
         $query = mysqli_query($connection, "SELECT * FROM user_documents WHERE user_id = $userId");

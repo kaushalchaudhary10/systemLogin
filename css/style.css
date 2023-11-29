@@ -70,3 +70,12 @@
     padding: 8px;
     max-width: 100px;
   }    
+
+  .error {
+    color: red;
+    font-weight: 400;
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+  }
+ 

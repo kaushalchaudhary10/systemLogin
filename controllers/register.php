@@ -4,8 +4,7 @@
     include __DIR__.'../../config/db.php';
     
     // Error & success messages
-    global $success_msg, $email_exist, $f_NameErr, $l_NameErr, $_emailErr, $_mobileErr, $_passwordErr;
-    global $fNameEmptyErr, $lNameEmptyErr, $emailEmptyErr, $mobileEmptyErr, $passwordEmptyErr, $msg;
+    global $email_exist, $f_NameErr, $l_NameErr, $_emailErr, $_mobileErr, $_passwordErr, $msg;
     
     // Set empty form variable for validation mapping
     $_first_name = $_last_name = $_email = $_mobile_number = $_password = "";
@@ -102,32 +101,6 @@
                     }
                 }
             }
-        } else {
-            if(empty($firstname)){
-                $fNameEmptyErr = '<div class="alert alert-danger">
-                    First name can not be blank.
-                </div>';
-            }
-            if(empty($lastname)){
-                $lNameEmptyErr = '<div class="alert alert-danger">
-                    Last name can not be blank.
-                </div>';
-            }
-            if(empty($email)){
-                $emailEmptyErr = '<div class="alert alert-danger">
-                    Email can not be blank.
-                </div>';
-            }
-            if(empty($mobilenumber)){
-                $mobileEmptyErr = '<div class="alert alert-danger">
-                    Mobile number can not be blank.
-                </div>';
-            }
-            if(empty($password)){
-                $passwordEmptyErr = '<div class="alert alert-danger">
-                    Password can not be blank.
-                </div>';
-            }            
         }
     }
 ?>

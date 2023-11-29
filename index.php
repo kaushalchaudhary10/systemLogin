@@ -2,15 +2,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Registration & Login</title>
-
-    <!-- jQuery + Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <?php include __DIR__ .'/commonHeader.php'; ?>
 </head>
 
 <body>
@@ -22,13 +14,11 @@
         <div class="vertical-center">
             <div class="inner-block">
 
-                <form action="" method="post">
+                <form action="" method="post" name="loginForm">
                     <h3>Login</h3>
 
                     <?php echo $accountNotExistErr; ?>
                     <?php echo $emailPwdErr; ?>
-                    <?php echo $email_empty_err; ?>
-                    <?php echo $pass_empty_err; ?>
 
                     <div class="form-group">
                         <label>Email</label>
@@ -49,6 +39,37 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $(function () {
+            // Form Validation
+            $("form[name='loginForm']").validate({
+                // Define validation rules
+                rules: {
+                    email_signin: "required",
+                    password_signin: "required",
+                    email_signin: {
+                        required: true,
+                        email: true
+                    },
+                    password_signin: {
+                        required: true
+                    }
+                },
+                // Specify validation error messages
+                messages: {
+                    email_signin: {
+                        required: "Please enter your email",
+                        minlength: "Please enter a valid email address"
+                    },
+                    password_signin: "Please enter your Password"
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        }); 
+    </script>
 
 </body>
 

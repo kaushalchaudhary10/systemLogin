@@ -4,43 +4,13 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/style.css">
+    <?php include __DIR__ .'/commonHeader.php'; ?>
     <title>Dashboard</title>
-
-    <!-- jQuery + Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script>
-        $(function() {
-        // Multiple images preview with JavaScript
-        var multiImgPreview = function(input, imgPreviewPlaceholder) {
-            if (input.files) {
-                var filesAmount = input.files.length;
-                for (i = 0; i < filesAmount; i++) {
-                    var reader = new FileReader();
-                    reader.onload = function(event) {
-                        $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
-                    }
-                    reader.readAsDataURL(input.files[i]);
-                }
-            }
-        };
-        $('#chooseFile').on('change', function() {
-            multiImgPreview(this, 'div.imgGallery');
-        });
-        });    
-    </script>
 </head>
 
 <body>
   <div class="container mt-5">
-    <form action="" method="post" enctype="multipart/form-data" class="mb-3">
+    <form action="" method="post" enctype="multipart/form-data" class="mb-3" id="uploadFileForm">
       <h3 class="text-center mb-5">Upload Multiple file/Images</h3>
       <div class="user-image mb-3 text-center">
         <div class="imgGallery"> 
@@ -62,23 +32,62 @@
         </div>
     <?php }?>
   </div>
-  <?php if(!empty($fetchFiles)) {
-    foreach($fetchFiles as $fileData) {
-   
+
+  <script>
+    $(function() {
+      // Form Validation
+      $("#uploadFileForm").validate({
+        // Define validation rules
+        rules: {
+          'fileUpload[]': {
+            required: true
+          }
+        },
+        // Specify validation error messages
+        messages: {
+          'fileUpload[]': "Please select a file to upload"
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+      });
+
+      // Multiple images preview with JavaScript
+      var multiImgPreview = function(input, imgPreviewPlaceholder) {
+        if (input.files) {
+          var filesAmount = input.files.length;
+          for (i = 0; i < filesAmount; i++) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+              $($.parseHTML('<img>')).attr('src', event.target.result).appendTo(imgPreviewPlaceholder);
+            }
+            reader.readAsDataURL(input.files[i]);
+          }
+        }
+      };
+      $('#chooseFile').on('change', function() {
+          multiImgPreview(this, 'div.imgGallery');
+      });
+    });    
+  </script>
+
+  <?php 
+    if(!empty($fetchFiles)) {
+      foreach($fetchFiles as $fileData) {
         $allowFileExt = array('jpg', 'png', 'jpeg');
         $fileExt = pathinfo($fileData['file_name'], PATHINFO_EXTENSION); 
         $fileURL='uploads/'.$fileData['file_name'];
         
-        if(in_array($fileExt, $allowFileExt)){ 
-         
-         $imgURL='uploads/'.$fileData['file_name'];
-    ?>
-         <div class="images">
-         <img src="<?php echo $fileURL ?>">
-         </div>
-    <?php
-      
-        }}}
-    ?>
+        if(in_array($fileExt, $allowFileExt)){
+          $imgURL='uploads/'.$fileData['file_name'];
+  ?>
+    <div class="images">
+    <img src="<?php echo $fileURL ?>">
+    </div>
+  <?php
+        }
+      }
+    }
+  ?>
 </body>
 </html>
